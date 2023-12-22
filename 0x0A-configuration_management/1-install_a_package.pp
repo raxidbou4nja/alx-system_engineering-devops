@@ -1,5 +1,6 @@
-# install_puppet_lint.pp
+# install new package
 
-exec { 'install_puppet_lint':
-  command => '/usr/bin/apt-get -y install puppet-lint=2.5.0',
+package { 'Flask':
+  ensure   => '2.1.0',   # Specify the desired version
+  provider => 'pip3',    # Use pip3 as the package provider
 }
