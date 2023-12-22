@@ -1,6 +1,6 @@
-# install new package
+# Installs the package puppet-lint using the gem provider
 
-package { 'Flask':
-  ensure   => '2.1.0',   # Specify the desired version
-  provider => 'pip3',    # Use pip3 as the package provider
+package { 'puppet-lint':
+  ensure   => '2.1.1',
+  provider => 'gem',
 }
