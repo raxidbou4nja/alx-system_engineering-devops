@@ -1,8 +1,8 @@
-exec { 'killmenow':
-  command => 'pkill -f killmenow',
-  # Refreshonly ensures the command is only run when notified by another resource
-  refreshonly => true,
-}
+# Kills a process named "killmenow"
 
-# Notify the exec resource to run when the manifest is applied
-Notify['Kill process'] -> Exec['killmenow']
+exec { 'killmenow':
+  command  => '/usr/bin/pkill killmenow',
+  provider => 'shell',
+  # Treats exit status 0 and 1 as successful
+  returns  => [0, 1],
+}
