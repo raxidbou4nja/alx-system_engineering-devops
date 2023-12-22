@@ -1,4 +1,6 @@
-package { 'Flask':
-  ensure   => '2.1.0',   # Specify the desired version
-  provider => 'pip3',    # Use pip3 as the package provider
+# install_puppet_lint.pp
+
+exec { 'install_puppet_lint':
+  command => '/usr/bin/apt-get -y install puppet-lint=2.5.0',
+  path    => '/usr/bin',
 }
