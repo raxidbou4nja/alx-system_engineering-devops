@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 USER="ubuntu"
 PRIVATE_KEY="~/.ssh/school"
-HOST="100.25.19.204"
+HOST="52.3.248.21"
 
 ssh "$USER@$HOST" -i "$PRIVATE_KEY"
