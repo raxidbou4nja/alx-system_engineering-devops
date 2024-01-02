@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# create apache server  inside docker
+/etc/init.d/apache2 start
