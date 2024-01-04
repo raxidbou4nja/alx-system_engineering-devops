@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# configure Nginx server to have a custom 404 page
+
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
+
+CUSTOM_404_PAGE="Ceci n'est pas une page"
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+echo "$CUSTOM_404_PAGE" | sudo tee /var/www/html/404.html > /dev/null
+
+sudo sed -i '/server_name _;/a \\terror_page 404 /404.html;\nlocation = /404.html {\n\troot /var/www/html;\n\tinternal;\n}' /etc/nginx/sites-available/default
+
+sudo service nginx restart
