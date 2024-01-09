@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Configures HAProxy as a load balancer for rb4.com
+
+# Install HAProxy on the load balancer
+apt-get -y update
+apt-get -y install haproxy
+
+# Configure HAProxy configuration file to distribute requests using a roundrobin algorithm
+echo '
+frontend rb4_frontend
+        bind 0.0.0.0:80
+        default_backend rb4_backend
+
+backend rb4_backend
+        balance roundrobin
+        server 451968-web-01 54.166.43.77:80 check
+        server 451968-web-02 100.26.227.175:80 check
+' > /etc/haproxy/haproxy.cfg
+
+# Restart HAProxy service
+service haproxy restart
+
