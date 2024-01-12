@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Simple script to check DNS information for a domain and subdomain
+
+check_domain() {
+    if [ -z "$1" ] || [ -z "$2" ]; then
+        echo "Usage: $0 <domain> <subdomain>"
+        exit 1
+    fi
+
+    full_domain="$2.$1"
+    result=$(dig +short $full_domain)
+
+    if [ -z "$result" ]; then
+        echo "No information found for $full_domain"
+    else
+        record_type=$(dig +short $full_domain | awk '{print $4}')
+        ip_address=$(dig +short $full_domain | awk '{print $5}')
+
+        echo "The subdomain $2 is a $record_type record and points to $ip_address"
+    fi
+}
+
+# Call the function with command-line arguments
+check_domain "$1" "$2"
+
