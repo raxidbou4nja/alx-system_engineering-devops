@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Script to create a MySQL database dump for all databases
+# Usage: ./backup_script.sh <MySQL_root_password>
+
+# Perform a mysqldump for all databases with root user and provided password
+mysqldump -u root --password="$1" -A --events > backup.sql
+
+# Generate a file name with the current date
+file_name=$(date +"%d-%m-%Y")
+
+# Compress the SQL dump file into a tarball
+tar -czvf "$file_name".tar.gz backup.sql
