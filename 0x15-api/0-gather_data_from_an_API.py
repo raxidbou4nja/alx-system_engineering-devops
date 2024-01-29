@@ -14,20 +14,19 @@ def get_employee_info(employee_id):
     return response.json()
 
 
-def get_employee_todo_progress(employee_id):
+def get_employee_todo_list(employee_id):
     r = get(f'https://jsonplaceholder.typicode.com/todos?userId={employee_id}')
     return r.json()
 
 
-if __name__ == "__main__":
-    if len(argv) != 2:
-        print("Usage: {} <employee_id>".format(argv[0]))
-        exit(1)
-
+def main():
     try:
+        if len(argv) != 2:
+            raise ValueError("Usage: {} <employee_id>".format(argv[0]))
+
         employee_id = int(argv[1])
         employee_info = get_employee_info(employee_id)
-        todo_list = get_employee_todo_progress(employee_id)
+        todo_list = get_employee_todo_list(employee_id)
 
         completed_tasks = sum(task['completed'] for task in todo_list)
         total_tasks = len(todo_list)
@@ -39,9 +38,11 @@ if __name__ == "__main__":
             if task['completed']:
                 print("\t{}".format(task['title']))
 
-    except ValueError:
-        print("Error: Employee ID must be an integer.")
-        exit(1)
+    except ValueError as ve:
+        print(f"Error: {ve}")
     except Exception as e:
-        print("Error: {}".format(e))
-        exit(1)
+        print(f"Error: {e}")
+
+
+if __name__ == "__main__":
+    main()
