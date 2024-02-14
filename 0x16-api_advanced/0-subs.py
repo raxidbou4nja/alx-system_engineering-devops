@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+"""
+Contains the number_of_subscribers function
+"""
+
 import requests
 
 def number_of_subscribers(subreddit):
