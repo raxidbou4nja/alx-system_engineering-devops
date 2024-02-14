@@ -11,13 +11,12 @@ def number_of_subscribers(subreddit):
         get number of subscribers for a given subreddit
         return 0 if invalid subreddit given
     """
-    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    req = requests.get(
+        "https://www.reddit.com/r/{}/about.json".format(subreddit),
+        headers={"User-Agent": "Custom"},
+    )
 
-    headers = requests.utils.default_headers()
-    headers.update({'User-Agent': 'by: u/factos22 1.0'})
-
-    r = requests.get(url, headers=headers).json()
-    subscribers = r.get('data', {}).get('subscribers')
-    if not subscribers:
+    if req.status_code == 200:
+        return req.json().get("data").get("subscribers")
+    else:
         return 0
-    return subscribers
