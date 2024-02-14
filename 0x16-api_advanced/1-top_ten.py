@@ -1,25 +1,23 @@
 #!/usr/bin/python3
 """
-Queries the Reddit API and prints the titles
-of the first 10 hot posts for a given subreddit.
+Query Reddit API and return the total number of subscribers
+for a given subreddit
 """
 import requests
 
-def top_ten(subreddit):
-    """Print the titles of the 10 hottest posts on a given subreddit."""
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {
-        "User-Agent": "by: u/factos22"
-    }
-    params = {
-        "limit": 10
-    }
-    response = requests.get(url, headers=headers,
-                            params=params, allow_redirects=False)
 
-    if response.status_code == 404:
-        print("None")
-        return
+def number_of_subscribers(subreddit):
+    """
+        get number of subscribers for a given subreddit
+        return 0 if invalid subreddit given
+    """
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
 
-    results = response.json().get("data")
-    [print(c.get("data").get("title")) for c in results.get("children")]
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent': 'by: u/factos22 1.0'})
+
+    r = requests.get(url, headers=headers).json()
+    subscribers = r.get('data', {}).get('subscribers')
+    if not subscribers:
+        return 0
+    return subscribers
