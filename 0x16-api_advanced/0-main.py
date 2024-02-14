@@ -9,4 +9,10 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         print("Please pass an argument for the subreddit to search.")
     else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
+        subreddit = sys.argv[1]
+        subscribers = number_of_subscribers(subreddit)
+        
+        if subscribers is not None:
+            print("{:d}".format(subscribers))
+        else:
+            print("Error: Subreddit '{}' not found.".format(subreddit))
