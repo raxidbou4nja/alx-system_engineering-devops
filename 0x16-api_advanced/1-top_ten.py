@@ -1,25 +1,23 @@
 #!/usr/bin/python3
 """
-Function that queries the Reddit API and prints the titles
+Query Reddit API and return the total number of subscribers
+for a given subreddit
 """
-
 import requests
 
 
-def top_ten(subreddit):
+def number_of_subscribers(subreddit):
     """
-    Function that queries the Reddit API
+        get number of subscribers for a given subreddit
+        return 0 if invalid subreddit given
     """
-    req = requests.get(
-        "https://www.reddit.com/r/{}/hot.json".format(subreddit),
-        headers={"User-Agent": "by u/factos22"},
-        params={"limit": 10},
-    )
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
 
-    if req.status_code == 200:
-        for get_data in req.json().get("data").get("children"):
-            dat = get_data.get("data")
-            title = dat.get("title")
-            print(title)
-    else:
-        print(None)
+    headers = requests.utils.default_headers()
+    headers.update({'User-Agent': 'by: u/factos22 1.0'})
+
+    r = requests.get(url, headers=headers).json()
+    subscribers = r.get('data', {}).get('subscribers')
+    if not subscribers:
+        return 0
+    return subscribers
